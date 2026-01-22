@@ -23,7 +23,7 @@ public class ConfigManager {
 		
 		env=System.getProperty("env","qa");
 		env=env.toLowerCase().trim();
-		System.out.println("Running test in which environment   "+ env );
+		//System.out.println("Running test in which environment   "+ env );
        switch (env) {
        case "dev"-> path="com/config/configdev1.properties";
     	   
