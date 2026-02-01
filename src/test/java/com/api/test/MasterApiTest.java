@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import static com.api.constants.Role.*;
 import static com.api.utils.AuthTokenProvider.*;
 import com.api.utils.ConfigManager;
+import com.api.utils.SpecUtil;
 
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
@@ -20,18 +21,12 @@ public class MasterApiTest {
 	
 	public void MasterApiTest() {
 		given()
-		.baseUri(ConfigManager.getProperty("BASE_URI"))
-		.and()
-		.header("Authorization",getToken(FD))
-		.log().all()
-		.contentType("")///empty contentype
+		.spec(SpecUtil.requestSpecWithAuth(FD))///empty contentype
 		.when()
 		.post("/master")
 		.then()
 		.and()
-		.log().all()
-		.statusCode(200)
-		.time(lessThan(1000l))
+		.spec(SpecUtil.responseSpec_ok())
 		.body("message", equalTo("Success"))
 		.body("data", notNullValue())
 		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("com/response/file/masterAPIResponseFile.json"))
@@ -44,17 +39,13 @@ public class MasterApiTest {
 	@Test
 	public void NegativeMasterApiTest() {
 		given()
-		.baseUri(ConfigManager.getProperty("BASE_URI"))
-		.and()
-		.header("Authorization","")
-		.log().all()
-		.contentType("")///empty contentype
+		.spec(SpecUtil.requestSpec())
+		///empty contentype
 		.when()
 		.post("/master")
 		.then()
 		.and()
-		.log().all()
-		.statusCode(401);
+		.spec(SpecUtil.responseSpec(401));
 	}
 	
 	

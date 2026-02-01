@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import com.api.pojo.UserCredentials;
 import com.api.utils.ConfigManager;
+import com.api.utils.SpecUtil;
 
 import static com.api.utils.ConfigManager.*;
 import static com.api.utils.ConfigManager.getProperty;
@@ -28,21 +29,11 @@ public void loginAPITest() throws IOException
 
 		UserCredentials user=new UserCredentials("iamfd","password");
 		given()//Give request specification!!
-		.baseUri(getProperty("BASE_URI"))
-		.and()
-		.contentType(ContentType.JSON)
-		.and()
-		.accept(ContentType.JSON)
-		.and()
-		.body(user)
-		.log().uri()
-		.log().method()
-		.log().headers()
+		.spec(SpecUtil.requestSpec(user))
 		.when()
 		.post("login")
 		.then()
-		.statusCode(200)
-		.log().all()
+		.spec(SpecUtil.responseSpec_ok())
 		.body("message", equalTo("Success"))
 		.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("com/response/file/loginApiResponseFile.json"))
 		.time(lessThan(4000l));
