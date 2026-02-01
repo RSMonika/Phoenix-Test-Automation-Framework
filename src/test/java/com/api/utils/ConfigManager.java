@@ -21,8 +21,8 @@ public class ConfigManager {
 
 	static {
 		
-		env=System.getProperty("env","qa");
-		env=env.toLowerCase().trim();
+		env=System.getProperty("env","qa");//it reads the system properties which stored --mvn test -Denv=qa,D -DEFINE SYSTEM PROPERTY
+		env=env.toLowerCase().trim();//-Denv=qa,env= defines property name ,qa =values assigned to it
 		//System.out.println("Running test in which environment   "+ env );
        switch (env) {
        case "dev"-> path="com/config/configdev1.properties";
@@ -34,7 +34,7 @@ public class ConfigManager {
 
        default -> path= "com/config/configqa.properties";
     	  
-       }
+       }//Class laoder---used as it works anywhere,
 		InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 		if (input==null) {
 			throw new RuntimeException("Cannot find the file at path"+input);
@@ -42,7 +42,7 @@ public class ConfigManager {
 		
 		try {
 
-			prop.load(input);
+			prop.load(input);//read the file content!!
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -55,7 +55,7 @@ public class ConfigManager {
 		// load the properties file using load()--in the form of reader--file
 		// amangement---reader--
 
-		return prop.getProperty("BASE_URI");
+		return prop.getProperty("BASE_URI");//gets the proeprty of file having key mentioned!!returns it va;ues
 
 	}
 
