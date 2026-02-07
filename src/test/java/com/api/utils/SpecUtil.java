@@ -63,6 +63,22 @@ public class SpecUtil {//This is a helper class.!!!!Its only job is to prepare c
 		      return requestSpecification ;
 		
 	}
+	public static RequestSpecification requestSpecWithAuth(Role role,Object payload) {
+		
+		
+	      RequestSpecification  requestSpecification = new RequestSpecBuilder()
+			.setBaseUri(ConfigManager.getProperty("BASE_URI"))
+			.setContentType(ContentType.JSON)
+			.setAccept(ContentType.JSON)
+			.addHeader("Authorization",AuthTokenProvider.getToken(role))
+			.setBody(payload)
+			.log(LogDetail.METHOD)
+			.log(LogDetail.HEADERS)
+			.log(LogDetail.BODY)
+			.build();
+	      return requestSpecification ;
+	
+}
 	public static ResponseSpecification responseSpec_ok() {
 		ResponseSpecification	responseSpecification=new ResponseSpecBuilder()
 		.expectStatusCode(200)
