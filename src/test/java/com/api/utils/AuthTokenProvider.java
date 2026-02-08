@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static com.api.constants.Role.*;
 
 import com.api.constants.Role;
-import com.api.pojo.UserCredentials;
+import com.api.request.model.UserCredentials;
 
 import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
